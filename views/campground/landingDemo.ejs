@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+
+<link rel="stylesheet" href="/landingDemo.css" />
+
+<div class="full-screen container text-center hidden flex-container-center">
+  <h1 class="mb-5 alert alert-secondary" role="alert">
+    <span><b>Note</b></span> : App is in Beta State
+  </h1>
+
+  <i><h3 class="mb-2">Things I Am Going to ADD</h3></i>
+
+  <ul id="ul">
+    <li>Admin Role</li>
+    <li>Fuzzy Search</li>
+    <li>Campground location with Google Maps</li>
+    <li>Campground cost</li>
+    <li>Good Footer</li>
+    <li>Home link in navigation</li>
+    <li>Authentication flash messages</li>
+    <li>User profile</li>
+    <li>Password reset</li>
+    <li>Image upload with multer and cloudinary</li>
+    <li>In-app notifications</li>
+    <li>Payment with Stripe API(optional)</li>
+    <li>Ratings and reviews</li>
+    <li>Comments on the campground show page</li>
+    <li>Pagination in campgrounds index</li>
+    <li>MAIL : For Feedback</li>
+  </ul>
+
+  <a href="/campgrounds" class="btn btn-lg btn-primary mt-3">
+    View All CampGrounds
+  </a>
+
+  <small class="text-success mt-5">
+    <i> Stay Tune for next Version... </i>
+  </small>
+</div>
+<!-- Main header and call to action  data-gr-c-s-loaded="true" -->
+<div class="row mx-0">
+  <div class="col-lg-6 col-md-8 mx-auto mt-5">
+    <div class="card text-white">
+      <div class="card-body shadow-sm text-center">
+        <h1 class="display-4">Welcome to CampSpot</h1>
+        <p class="lead">Home of World Class Campground's.</p>
+
+        <button class="btn btn-lg btn-primary mt-2 mb-2" onclick="showPopup()">
+          View all CampGround
+        </button>
+      </div>
+      <!-- Footer -->
+      <div class="card-footer">
+        <span class="float-left"
+          >Created by
+          <a
+            href="https://github.com/01kingmaker01?tab=repositories"
+            class="text-reset font-weight-bold"
+            >Ketan Chavan</a
+          ></span
+        >
+        <!-- <span class="float-right"
+              >View this project on
+              <a
+                href="https://github.com/01kingmaker01"
+                class="text-reset font-weight-bold"
+                >My Github</a
+              ></span
+            > -->
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="slideshow">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<script>
+  const popup = document.querySelector('.full-screen');
+  const lis = document.querySelector('ul.slideshow');
+  const lh = document.querySelector('div.row');
+
+  function showPopup() {
+    popup.classList.remove('hidden');
+    lis.style.display = 'none';
+    lh.style.display = 'none';
+  }
+  function closePopup() {
+    popup.classList.add('hidden');
+  }
+</script>
+<%- include('../partials/footer') %>

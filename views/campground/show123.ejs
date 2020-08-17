@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <p class="lead">YelpCamp</p>
+      <div class="list-group">
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="card">
+        <img
+          class="card-img-top border rounded"
+          src="<%=campInfo.img%>"
+          alt="<%=campInfo.name%> image"
+        />
+        <div class="card-body">
+          <div class="mb-3">
+            <a href="#">
+              <h4 class="card-title d-inline"><%=campInfo.name%></h4>
+            </a>
+            <h5 class="float-right d-inline">
+              $<%= campInfo.price %> <small><sub>/night</sub></small>
+            </h5>
+          </div>
+          <%if(!campInfo.description){%>
+          <p class="card-text"><i>NO description Added</i></p>
+          <%}else{%>
+          <p class="card-text"><%=campInfo.description%></p>
+          <small class="text-muted d-block card-subtitle mb-3">
+            <em
+              >Submitted by: <%= campInfo.author.username %>,
+              <%=moment(campInfo.createdAt).fromNow() %>
+            </em>
+          </small>
+
+          <% if (currentUser && campInfo.author.id.equals(currentUser._id)) { %>
+          <a
+            class="btn btn-sm btn-warning"
+            href="/campgrounds/<%= campInfo._id %>/edit "
+            >Edit</a
+          >
+
+          <form
+            class="d-inline"
+            action="/campgrounds/<%= campInfo._id %>?_method=delete "
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+      <br />
+      <div class="jumbotron">
+        <div class="text-right">
+          <a
+            class="btn btn-success"
+            href="/campgrounds/<%= campInfo._id %>/comments/new"
+            >Add a New Comment</a
+          >
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-12">
+            <%}%> <% campInfo.comments.forEach(comment => {%>
+            <div>
+              <b><%=comment.author.username%></b>
+              <span class="float-right text-muted card-subtitle">
+                <%=comment.date.toDateString() %>
+              </span>
+              <p class="figure-caption"><%= comment.text%></p>
+              <% if(currentUser && comment.author.id.equals(currentUser._id)){
+              %>
+
+              <a
+                href="/campgrounds/<%= campInfo._id %>/comments/<%= comment._id %>/edit"
+                class="btn btn-sm btn-warning"
+                >Edit</a
+              >
+
+              <form
+                class="d-inline"
+                action="/campgrounds/<%= campInfo._id %>/comments/<%=comment._id%>?_method=delete "
+                method="POST"
+              >
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+              <% } %>
+            </div>
+            <br />
+            <%}) %>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="/campgrounds" class="">Go Back to CAMPGROUNDS </a>
+      </div>
+    </div>
+  </div>
+</div>

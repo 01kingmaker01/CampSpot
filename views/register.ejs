@@ -1,0 +1,101 @@
+<%- include('./partials/header') %>
+
+<h1 id="loginH1" class="text-center  h1 h1 mb-3">
+  <a href="/campgrounds">
+    <img style="width: 80px; height: 80px;" src="/Group.png" alt=""
+  /></a>
+
+  <h1 class="mt-4 text-center"> <i class="fas fa-user-plus"></i> Register</span>
+</h1>
+<div id="register" class="card card-body m-auto">
+
+
+  <form action="/users/register" method="POST">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="name"
+        name="name"
+        id="name"
+        class="form-control"
+        value="<%= typeof name!='undefined' ? name:'' %>"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="name">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        name="username"
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        value="<%= typeof email!='undefined' ? email:'' %>"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Enter Password</label>
+      <input
+        style="padding-right: 35px;"
+        id="password"
+        type="password"
+        class="form-control"
+        name="password"
+        autocomplete="current-password"
+        minlength="6"
+      />
+      <i
+        class="far fa-eye float-right"
+        style="opacity: 0.6;"
+        id="togglePassword1"
+      ></i>
+    </div>
+
+    <div class="form-group">
+      <label for="password0">Confirm Password</label>
+      <input
+        type="password"
+        name="password0"
+        id="password0"
+        class="form-control"
+        value="<%= typeof password0!='undefined' ? password0:'' %>"
+        required
+      />
+    </div>
+    <button class="btn btn-success mt-3 btn-block">
+      Submit
+    </button>
+  </form>
+
+  <p class="text-center mt-4">
+    Have An Account?
+    <a href="/users/login">LogIn</a>
+  </p>
+</div>
+<script>
+  const togglePassword = document.querySelector('#togglePassword1');
+  const password = document.querySelector('#password');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type =
+      password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
+<%- include('./partials/footer') %>

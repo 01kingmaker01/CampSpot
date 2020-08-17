@@ -1,0 +1,47 @@
+<%- include('./partials/header') %>
+
+<link rel="stylesheet" href="/landing.css" />
+
+<div class="full-screen container text-center hidden flex-container-center">
+  <h2>App is in Beta State</h2>
+
+  <p>
+    Fuzzy Search, Campground location with Google Maps, Campground cost, Footer,
+    Home link in navigation , Authentication flash messages , Display time since
+    post was created with Moment JS , User profile , Password reset , Image
+    upload with multer and cloudinary , In-app notifications, Payment with
+    Stripe API(optional), Ratings and reviews, Comments on the campground show
+    page, Pagination in campgrounds index.
+  </p>
+  <a href="/campgrounds" class="btn btn-primary">View All CampGrounds</a>
+  <button onclick="closePopup()">Close Popup!</button>
+</div>
+<div id="landing-header">
+  <h1>Welcome to CampSpot</h1>
+  <a href="/campgrounds" class="btn btn-primary">View All CampGrounds</a>
+
+  <button class="btn btn-primary" onclick="showPopup()">Show Popup</button>
+</div>
+<ul class="slideshow">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<script>
+  const popup = document.querySelector('.full-screen');
+  const lis = document.querySelector('ul.slideshow');
+  const lh = document.querySelector('#landing-header');
+
+  function showPopup() {
+    popup.classList.remove('hidden');
+    lis.style.display = 'none';
+    lh.style.display = 'none';
+  }
+  function closePopup() {
+    popup.classList.add('hidden');
+  }
+</script>
+<%- include('./partials/footer') %>
