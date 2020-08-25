@@ -10,7 +10,7 @@
   overflow-x: hidden;
 } */
 
-div.alert.mb-0 {
+div.alert.mb-0.selector {
   position: absolute;
   width: 100vw;
   left: 0px !important;
