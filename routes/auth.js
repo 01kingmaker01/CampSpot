@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const passport = require('passport');
 var User = require('../models/user');
+const user = require('../models/user');
 
 router.get('/landing', (req, res) => {
   res.render('landing');
@@ -21,7 +22,7 @@ router.get('/users/register', (req, res) => {
 });
 
 router.post('/users/register', (req, res) => {
-  var { name, email, username, password, password0 } = req.body;
+  var { name, email, avatar, username, password, password0 } = req.body;
 
   if (password != password0) {
     req.flash('success', "Password Didn't matched");
@@ -31,6 +32,7 @@ router.post('/users/register', (req, res) => {
       username,
       password,
       password0,
+      avatar,
     });
   }
 
@@ -43,6 +45,7 @@ router.post('/users/register', (req, res) => {
         username,
         password,
         password0,
+        avatar,
       });
     } else {
       User.findOne({ username: username }, (foundUser) => {
@@ -60,6 +63,7 @@ router.post('/users/register', (req, res) => {
             username: req.body.username,
             name: name,
             email: email,
+            avatar: avatar,
           });
           User.register(newUser, req.body.password, (err, user) => {
             if (err) {
@@ -71,6 +75,7 @@ router.post('/users/register', (req, res) => {
                 username,
                 password,
                 password0,
+                avatar,
               });
             }
             passport.authenticate('local')(req, res, () => {
@@ -185,6 +190,18 @@ router.post('/users/admin', (req, res) => {
           });
         }
       });
+    }
+  });
+});
+
+router.get('/users/:pid', (req, res) => {
+  user.findById(req.params.pid, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+      req.flash('error', 'Something went wrong');
+      res.redirect('/campgrounds');
+    } else {
+      res.render('profile', { user: foundUser });
     }
   });
 });

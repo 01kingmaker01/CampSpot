@@ -65,23 +65,6 @@ router.get('/:id', (req, res) => {
     });
 });
 
-//show route -- shows more info about items in index route
-router.get('/c/:id', (req, res) => {
-  //capture id
-  campgrounds
-    .findById(req.params.id)
-    .populate('comments')
-    .exec(function (err, campInfo) {
-      if (err || !campInfo) {
-        console.log(err);
-        req.flash('error', 'Sorry, that campground does not exist!');
-        res.redirect('/campgrounds');
-      } else {
-        res.render('campground/showC', { campInfo: campInfo });
-      }
-    });
-});
-
 //edit
 router.get('/:id/edit', middleware.checkCampOwn, (req, res) => {
   campgrounds.findById(req.params.id, (err, foundCampground) => {

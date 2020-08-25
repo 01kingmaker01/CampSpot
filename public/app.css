@@ -11,8 +11,10 @@
 } */
 
 div.alert.mb-0 {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  width: 100vw;
+  left: 0px !important;
+  top: 80px !important;
 }
 
 .qwerty {

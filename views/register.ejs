@@ -27,8 +27,21 @@
       <input
         type="text"
         class="form-control"
+        id="username"
         name="username"
+        value="<%= typeof name!='undefined' ? username:'' %>"
         autocomplete="username"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Avatar</label>
+      <input
+      id="avatar"
+        type="text"
+        class="form-control"
+        name="avatar"
+        value="<%= typeof name!='undefined' ? avatar:'' %>"
       />
     </div>
 
