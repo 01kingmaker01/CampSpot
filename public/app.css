@@ -133,6 +133,7 @@ header.rounded-0.d-block {
 button.text-dark {
   outline: none;
   border: none;
+      background: transparent !important;
   border-radius: none;
 }
 
