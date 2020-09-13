@@ -7,14 +7,18 @@ var express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local'),
   methodOverride = require('method-override'),
+  //
+  //-----------Models------------//
+  //
   campgrounds = require('./models/campgrounds'),
   comments = require('./models/comments'),
-  User = require('./models/user');
+  User = require('./models/user'),
+  //
+  //----------routes------------//
 
-//routes
-var campgroundRoute = require('./routes/campgrounds');
-var commentRoute = require('./routes/comments');
-var authRoute = require('./routes/auth');
+  campgroundRoute = require('./routes/campgrounds'),
+  commentRoute = require('./routes/comments'),
+  authRoute = require('./routes/auth');
 
 const db = require('./config/keys').MongoURI;
 
@@ -52,10 +56,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Global variables
 app.use(function (req, res, next) {
   res.locals.currentUser = req.user;
-  res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 });
 

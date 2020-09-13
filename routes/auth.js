@@ -1,8 +1,9 @@
 const express = require('express');
 var router = express.Router();
 const passport = require('passport');
+var campgrounds = require('../models/campgrounds');
 var User = require('../models/user');
-const user = require('../models/user');
+const { json } = require('body-parser');
 
 router.get('/landing', (req, res) => {
   res.render('landing');
@@ -23,23 +24,17 @@ router.get('/users/register', (req, res) => {
 
 router.post('/users/register', (req, res) => {
   var { name, email, avatar, username, password, password0 } = req.body;
+  let errors = [];
 
   if (password != password0) {
-    req.flash('success', "Password Didn't matched");
-    res.redirect('/users/register', {
-      name,
-      email,
-      username,
-      password,
-      password0,
-      avatar,
-    });
+    errors.push({ msg: "Password Didn't matched" });
   }
 
   User.findOne({ email: email }, (user) => {
     if (user) {
-      req.flash('error', err.message);
-      res.redirect('/users/register', {
+      errors.push({ msg: 'Email already exists' });
+      res.render('register', {
+        errors,
         name,
         email,
         username,
@@ -50,26 +45,32 @@ router.post('/users/register', (req, res) => {
     } else {
       User.findOne({ username: username }, (foundUser) => {
         if (foundUser) {
-          req.flash('error', err.message);
-          res.redirect('/users/register', {
+          errors.push({ msg: 'Username already exists' });
+          res.render('register', {
+            errors,
             name,
             email,
             username,
             password,
             password0,
+            avatar,
           });
         } else {
+          if (avatar !== '') {
+            var avatarpic = avatar;
+          }
           var newUser = new User({
             username: req.body.username,
             name: name,
             email: email,
-            avatar: avatar,
+            avatar: avatarpic,
           });
           User.register(newUser, req.body.password, (err, user) => {
             if (err) {
-              req.flash('error', err.message);
-              console.log(err);
-              res.redirect('/users/register', {
+              errors.push({ msg: err.message });
+
+              res.render('register', {
+                errors,
                 name,
                 email,
                 username,
@@ -87,6 +88,18 @@ router.post('/users/register', (req, res) => {
       });
     }
   });
+
+  if (errors.length > 0) {
+    res.render('register', {
+      errors,
+      name,
+      email,
+      username,
+      password,
+      password0,
+      avatar,
+    });
+  }
 });
 
 //login template
@@ -195,13 +208,23 @@ router.post('/users/admin', (req, res) => {
 });
 
 router.get('/users/:pid', (req, res) => {
-  user.findById(req.params.pid, (err, foundUser) => {
-    if (err) {
+  User.findById(req.params.pid, (err, foundUser) => {
+    if (err || !foundUser) {
       console.log(err);
       req.flash('error', 'Something went wrong');
       res.redirect('/campgrounds');
     } else {
-      res.render('profile', { user: foundUser });
+      campgrounds
+        .find()
+        .where('author.id')
+        .equals(foundUser._id)
+        .exec(function (err, campgrounds) {
+          if (err) {
+            req.flash('error', 'Something went wrong.');
+            return res.redirect('/');
+          }
+          res.render('profile', { user: foundUser, campInfo: campgrounds });
+        });
     }
   });
 });

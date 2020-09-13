@@ -1,13 +1,13 @@
 <%- include('./partials/header') %>
 <h1 id="loginH1" class="text-center h1 mb-3">
   <a href="/campgrounds">
-    <img style="width: 80px; height: 80px;" src="/Group.png" alt=""
+    <img style="width: 80px; height: 80px" src="/Group.png" alt=""
   /></a>
 
   <span class="mt-4 d-block">Log in to CampSpot</span>
 </h1>
 
-<div class="card card-body m-auto" style="width: 308px;">
+<div class="card card-body m-auto" style="width: 308px">
   <form action="/users/login" method="POST">
     <div class="form-group">
       <label for="username">Username</label>
@@ -31,9 +31,7 @@
       />
       <i class="far fa-eye float-right" id="togglePassword"></i>
     </div>
-    <button class="btn btn-success btn-block">
-      Log In
-    </button>
+    <button class="btn btn-success btn-block">Log In</button>
   </form>
 </div>
 

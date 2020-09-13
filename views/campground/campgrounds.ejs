@@ -9,7 +9,18 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     />
+
+    <style>
+      div.alert.mb-0 {
+        position: absolute;
+        width: 100vw;
+        left: 0px !important;
+        top: 80px !important;
+      }
+    </style>
+
     <link rel="stylesheet" href="/app.css" />
+
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -22,7 +33,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body style="padding-top: 0;">
+  <body style="padding-top: 0">
     <nav
       id="mainNavbar"
       class="navbar fixed-top navbar-expand-md navbar-dark <%= typeof page !== 'undefined' && page === 'login' ? 'hidden' :typeof page !== 'undefined' && page === 'register' ? 'hidden' :typeof page !== 'undefined' && page === '/' ? 'hidden' :'' %>"
@@ -287,8 +298,9 @@
             </li>
 
             <% } else{%>
-            <li class="nav-item">
-              <a href="#" class="nav-link text-success">
+            <li class="nav-link">
+              <% console.log(currentUser); %>
+              <a class="text-success" href="/users/<%= currentUser.id %> ">
                 Logged In as <strong><%=currentUser.username%> </strong>
               </a>
             </li>
@@ -345,12 +357,25 @@
       </div>
     </nav>
 
-    <% if(error && error.length>0){ %>
-    <div class="alert selector alert-danger mb-0" role="alert">
+    <% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error)
+    {%>
+    <div class="alert alert-warning mb-0 selector" role="alert">
+      <%= error.msg %>
+    </div>
+    <% }); %> <% } %> <% if(success_msg != ''){ %>
+    <div class="alert alert-success mb-0 selector" role="alert">
+      <%= success_msg %>
+    </div>
+    <% } %> <% if(error_msg != ''){ %>
+    <div class="alert alert-danger mb-0 selector" role="alert">
+      <%= error_msg %>
+    </div>
+    <% } %> <% if(error != ''){ %>
+    <div class="alert alert-danger mb-0 selector" role="alert">
       <%= error %>
     </div>
-    <%}%> <% if (success && success.length>0) { %>
-    <div class="alert selector alert-success mb-0" role="alert">
+    <% } %> <% if (success && success.length>0) { %>
+    <div class="alert alert-success mb-0 selector" role="alert">
       <%= success %>
     </div>
     <% } %>
@@ -359,9 +384,7 @@
       <div class="bg-transparent text-white text-center">
         <div id="pages" class="container">
           <h1 class="display-3">Welcome to CampSpot!</h1>
-          <p class="lead">
-            Home of World Class Campground's.
-          </p>
+          <p class="lead">Home of World Class Campground's.</p>
         </div>
       </div>
     </header>
@@ -401,7 +424,7 @@
       <div class="card mt-5 ml-auto mr-auto text-center p-5">
         <h1>Want To Add Campground...?</h1>
         <a
-          style="max-width: 350px;"
+          style="max-width: 350px"
           class="btn ml-auto mr-auto btn-outline-dark"
           href="/campgrounds/new"
           >Add New Campground</a
@@ -409,7 +432,7 @@
       </div>
     </div>
 
-    <footer style="padding-top: 20px;" class="text-center text-muted">
+    <footer style="padding-top: 20px" class="text-center text-muted">
       © CampSpot 2020 | Github
     </footer>
 
@@ -418,17 +441,6 @@
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
-
     <script>
       $('.selector').delay(3000).fadeOut('slow');
 
@@ -439,5 +451,15 @@
         });
       });
     </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
