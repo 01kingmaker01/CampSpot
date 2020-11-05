@@ -22,12 +22,13 @@ var express = require('express'),
 
 const db = require('./config/keys').MongoURI;
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);
 mongoose
   .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log('Atlas connected');
